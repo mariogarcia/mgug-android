@@ -1,31 +1,23 @@
 package mgug.app
 
-import android.app.AlertDialog
-import android.app.ListActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.arasthel.swissknife.annotations.OnUIThread
-import groovy.transform.CompileStatic
-import mgug.app.adapter.TopicAdapter
-import mgug.app.domain.Topic
-import rx.Observable
-import rx.Subscriber
+import mgug.app.adapter.RepositoryAdapter
+import mgug.app.services.Services
+import mgug.app.widget.CustomListActivity
+import mgug.app.widget.Widgets
 import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
 import rx.schedulers.Schedulers
 
-@CompileStatic
-class MainActivity extends ListActivity {
-
-    TopicAdapter topicAdapter
+class MainActivity extends CustomListActivity<RepositoryAdapter> {
 
     @Override
     void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
-        topicAdapter = new TopicAdapter(this, R.layout.topic_item)
-        setListAdapter(topicAdapter)
+        setListAdapter(new RepositoryAdapter(this, R.layout.repository_item))
         loadTopicList()
     }
 
@@ -58,20 +50,12 @@ class MainActivity extends ListActivity {
     }
 
     void loadTopicList() {
-        Observable.create(this.&doItInBackground as Observable.OnSubscribe)
-                  .subscribeOn(Schedulers.newThread())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(topicAdapter.&add)
-    }
-
-    void doItInBackground(final Subscriber subscriber) {
-        (0..10).each(this.&createTopic >> subscriber.&onNext)
-
-        subscriber.onCompleted()
-    }
-
-    Topic createTopic(final Long id) {
-        new Topic(author: 'John Doe', description: 'Good topic 1', checked: false, votes: 20)
+        use(Services) {
+            githubService.findAllRepositoriesOf("mariogarcia")
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(arrayAdapter.&addAll)
+        }
     }
 
 }

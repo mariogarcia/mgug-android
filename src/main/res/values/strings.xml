@@ -7,4 +7,6 @@
     <string name="about_credits">Check http://www.groovy-lang.org</string>
     <string name="about_descrip">This is an Android app written in Groovy</string>
 
+    <string name="api_host">"https://api.github.com/"</string>
+
 </resources>
