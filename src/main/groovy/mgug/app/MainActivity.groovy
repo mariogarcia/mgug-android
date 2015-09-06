@@ -61,21 +61,17 @@ class MainActivity extends ListActivity {
         Observable.create(this.&doItInBackground as Observable.OnSubscribe)
                   .subscribeOn(Schedulers.newThread())
                   .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new Action1<Topic>() {
-                    @Override
-                    void call(Topic topic) {
-                        topicAdapter.add(topic)
-                    }
-                  })
+                  .subscribe(topicAdapter.&add)
     }
 
     void doItInBackground(final Subscriber subscriber) {
-        (0..10).each {
-            subscriber.onNext(
-                new Topic(author: 'John Doe', description: 'Good topic 1', checked: false, votes: 20)
-            )
-        }
+        (0..10).each(this.&createTopic >> subscriber.&onNext)
+
         subscriber.onCompleted()
+    }
+
+    Topic createTopic(final Long id) {
+        new Topic(author: 'John Doe', description: 'Good topic 1', checked: false, votes: 20)
     }
 
 }
