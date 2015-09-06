@@ -2,24 +2,30 @@ package mgug.app
 
 import android.app.AlertDialog
 import android.app.ListActivity
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import com.arasthel.swissknife.annotations.OnBackground
 import com.arasthel.swissknife.annotations.OnUIThread
 import groovy.transform.CompileStatic
 import mgug.app.adapter.TopicAdapter
 import mgug.app.domain.Topic
+import rx.Observable
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import rx.functions.Action1
+import rx.schedulers.Schedulers
 
 @CompileStatic
 class MainActivity extends ListActivity {
-      
+
+    TopicAdapter topicAdapter
+
     @Override
     void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
+        topicAdapter = new TopicAdapter(this, R.layout.topic_item)
+        setListAdapter(topicAdapter)
         loadTopicList()
     }
 
@@ -52,23 +58,24 @@ class MainActivity extends ListActivity {
     }
 
     void loadTopicList() {
-        AsyncTask<Object,Integer, List<Topic>> task = new AsyncTask<Object,Integer, List<Topic>> () {
-            @Override
-            protected List<Topic> doInBackground(Object[] params) {
-                List<Topic> topics = [
-                    new Topic(author: 'John Doe', description: 'Good topic 1', checked: false, votes: 20),
-                    new Topic(author: 'John Doe', description: 'Good topic 2', checked: false, votes: 0)
-                ]
-            }
-            @Override
-            protected void onPostExecute(List<Topic> list) {
-                ArrayAdapter<Topic> adapter = new TopicAdapter(MainActivity.this, R.layout.topic_item)
-                adapter.addAll(list)
-                setListAdapter(adapter)
-            }
-        }
-
-        task.execute()
+        Observable.create(this.&doItInBackground as Observable.OnSubscribe)
+                  .subscribeOn(Schedulers.newThread())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .subscribe(new Action1<Topic>() {
+                    @Override
+                    void call(Topic topic) {
+                        topicAdapter.add(topic)
+                    }
+                  })
     }
-    
+
+    void doItInBackground(final Subscriber subscriber) {
+        (0..10).each {
+            subscriber.onNext(
+                new Topic(author: 'John Doe', description: 'Good topic 1', checked: false, votes: 20)
+            )
+        }
+        subscriber.onCompleted()
+    }
+
 }

@@ -66,6 +66,9 @@ dependencies {
     // Imaging
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+    compile 'io.reactivex:rxandroid:1.0.1'
+
+
     // Spock/Android
     androidTestCompile "com.andrewreitz:spock-android:1.2.1"
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
