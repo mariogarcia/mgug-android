@@ -1,7 +1,8 @@
-package mgug.app.services
+package mgug.lib.services
 
 import android.content.Context
 import mgug.app.R
+import mgug.lib.R
 import retrofit.RestAdapter
 
 class Services {

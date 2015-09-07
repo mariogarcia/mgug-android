@@ -1,4 +1,4 @@
-package mgug.app.domain
+package mgug.lib.domain
 
 import groovy.transform.Immutable
 

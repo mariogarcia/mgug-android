@@ -2,14 +2,17 @@ package mgug.app
 
 import android.os.Bundle
 import com.arasthel.swissknife.annotations.OnUIThread
+import groovy.transform.CompileStatic
 import mgug.app.adapter.RepositoryAdapter
-import mgug.app.services.Services
+import mgug.lib.domain.Repository
 import mgug.app.widget.CustomListActivity
 import mgug.lib.asts.OnOptionsItemSelected
 import mgug.lib.asts.OptionsMenu
 import rx.android.schedulers.AndroidSchedulers
+import rx.functions.Action1
 import rx.schedulers.Schedulers
 
+@CompileStatic
 @OptionsMenu(R.menu.menu_main)
 class MainActivity extends CustomListActivity<RepositoryAdapter> {
 
@@ -31,12 +34,10 @@ class MainActivity extends CustomListActivity<RepositoryAdapter> {
     }
 
     void loadTopicList() {
-        use(Services) {
-            githubService.findAllRepositoriesOf("mariogarcia")
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(arrayAdapter.&addAll)
-        }
+        githubService.findAllRepositoriesOf("mariogarcia")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(arrayAdapter.&addAll as Action1<List<Repository>>)
     }
 
 }

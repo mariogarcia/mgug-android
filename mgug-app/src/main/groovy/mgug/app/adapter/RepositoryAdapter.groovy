@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import groovy.transform.InheritConstructors
 import mgug.app.R
-import mgug.app.domain.Repository
+import mgug.lib.domain.Repository
 
 @InheritConstructors
 class RepositoryAdapter extends ArrayAdapter<Repository> {

@@ -1,6 +1,6 @@
-package mgug.app.services
+package mgug.lib.services
 
-import mgug.app.domain.Repository
+import mgug.lib.domain.Repository
 import retrofit.http.GET
 import retrofit.http.Path
 import rx.Observable
