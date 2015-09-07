@@ -41,12 +41,9 @@ class MainActivity extends CustomListActivity<RepositoryAdapter> {
 
     @OnUIThread
     void showAbout() {
-        use(Widgets) {
-            showAlertDialog {
-                icon  = R.drawable.ic_launcher
-                title = R.string.app_name
-                view  = layoutInflater.inflate(R.layout.about, null, false)
-            }
+        showDialogWithLayout(R.layout.about){
+            icon  = R.drawable.ic_launcher
+            title = R.string.app_name
         }
     }
 

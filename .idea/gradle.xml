@@ -9,6 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/mgug-app" />
+            <option value="$PROJECT_DIR$/mgug-lib" />
           </set>
         </option>
       </GradleProjectSettings>

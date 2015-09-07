@@ -1,0 +1,3 @@
+moduleName=mgug.lib
+moduleVersion=1.0
+extensionClasses=mgug.lib.Widgets,mgug.lib.Activities
