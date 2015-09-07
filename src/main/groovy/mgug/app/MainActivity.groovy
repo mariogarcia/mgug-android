@@ -41,12 +41,13 @@ class MainActivity extends CustomListActivity<RepositoryAdapter> {
 
     @OnUIThread
     void showAbout() {
-         new AlertDialog.Builder(this)
-            .setIcon(R.drawable.ic_launcher)
-            .setTitle(R.string.app_name)
-            .setView(layoutInflater.inflate(R.layout.about, null, false))
-            .create()
-            .show()
+        use(Widgets) {
+            showAlertDialog {
+                icon  = R.drawable.ic_launcher
+                title = R.string.app_name
+                view  = layoutInflater.inflate(R.layout.about, null, false)
+            }
+        }
     }
 
     void loadTopicList() {
