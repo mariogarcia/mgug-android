@@ -37,6 +37,9 @@ android {
 
 repositories {
     jcenter()
+    maven {
+        url  "http://dl.bintray.com/marioggar/maven"
+    }
 }
 
 dependencies {
@@ -47,6 +50,10 @@ dependencies {
     compile 'org.codehaus.groovy:groovy:2.4.4:grooid'
     // Groovy Json handling
     compile ('org.codehaus.groovy:groovy-json:2.4.0-rc-1') {
+        transitive = false
+    }
+
+    compile('fnz:fnz:1.0.6') {
         transitive = false
     }
 

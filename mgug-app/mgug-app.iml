@@ -97,9 +97,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />
     <orderEntry type="library" exported="" name="rxjava-1.0.13" level="project" />
+    <orderEntry type="library" exported="" name="fnz-1.0.6" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
-    <orderEntry type="library" exported="" name="groovy-json-2.4.0-rc-1" level="project" />
     <orderEntry type="library" exported="" name="groovy-2.4.4-grooid" level="project" />
+    <orderEntry type="library" exported="" name="groovy-json-2.4.0-rc-1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="testing-support-lib-0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="spock-android-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />

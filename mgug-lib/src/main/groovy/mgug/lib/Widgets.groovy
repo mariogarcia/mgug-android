@@ -27,7 +27,12 @@ class Widgets {
      * @param settings all the settings of the {@link android.app.AlertDialog.Builder }
      *
      */
-    static void showDialogWithLayout(final Activity shelf, int layout, @DelegatesTo(AlertDialog.Builder) final Closure<?> settings) {
+    static void showDialogWithLayout(
+            final Activity shelf,
+            int layout,
+            @DelegatesTo(AlertDialog.Builder) final Closure<?> settings) {
+
+
         /* Using the builder with the activity and the chosen layout */
         AlertDialog.Builder builder =
             new AlertDialog.Builder(shelf)
